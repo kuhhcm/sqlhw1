@@ -1,0 +1,50 @@
+create table users(
+  user_id serial primary key,
+  name varchar(50),
+  age int
+);
+
+create table newspapers(
+  newspaper_id serial primary key,
+  name varchar(50)
+);
+
+create table subscriptions(
+  subscription_id serial primary key,
+  user_id int,
+  newspaper_id int,
+    foreign key (user_id) references users(user_id),
+    foreign key (newspaper_id) references newspapers(newspaper_id)
+);
+
+insert into users(name, age) values
+('user 1', 21),
+('user 2', 18),
+('user 3', 69),
+('user 4', 44),
+('user 5', 81);
+
+insert into newspapers(name) values
+('Newsday'),
+('USA Today'),
+('The New York Times'),
+('The Washington Post'),
+('The Wall Street Journal');
+
+insert into subscriptions(user_id, newspaper_id) values
+(1, 1),
+(2, 4),
+(3, 2);
+
+
+select count(*) as unsubscribed_users
+from users
+where user_id not in(select distinct user_id from subscriptions) 
+
+select count(distinct user_id) as subscribed_users
+from subscriptions
+
+
+
+
+
